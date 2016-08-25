@@ -1,3 +1,723 @@
 body {
     padding-top: 60px;
 }
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,1);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 48.8%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+.img-txt {
+    position: absolute;
+    margin: 0 auto;
+    vertical-align: middle;
+    z-index: 999999;
+}
+.thumbnail {
+    /*position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;*/
+    position: relative;
+    max-width: 212.5px;
+    margin-left: auto;
+    margin-right: auto;
+    /*width: 250px;
+    height: 150px;
+    background-position: 50% 50%;*/
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#img-txt-cont {
+    margin: 18px 0px 18px 0px;
+    position: relative;
+    height: 150px;
+    max-width: 100%;
+    display: block;
+    border-radius: 0px;
+}
+.thumbnail > img {
+    height: 140px;
+    width: 202.5px;
+    border-radius: 6px;
+    margin-right: auto;
+    margin-left: auto;
+    background-size: cover;
+}
+tr.clickableRow { 
+    cursor: pointer; 
+}
+.link-margin {
+    margin: 10px 0 10px 0;
+}
+a.restaurant_web:hover {
+    text-decoration: none;
+}
+.modal-dialog{
+    overflow-y: initial !important
+}
+.tooltip-inner {
+    white-space: pre-wrap;
+}
+#ex1Slider .slider-selection {
+	background: #BABABA;
+}
+.slider.slider-horizontal {
+    width: 275px;
+    height: 50px;
+}
+.slider .tooltip.top {
+    margin-top: -17px;
+}
+.user {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.horizontal-center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* #### Mobile Phones Portrait #### */
+@media screen and (max-device-width: 480px) and (orientation: portrait){
+  .modal-body{
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .show_map {
+    height: 250px;
+  }
+  .pull-right-mobile {
+    text-align: right;
+  }
+  .pull-left-mobile {
+    text-align: left;
+  }
+  .pull-center-mobile {
+    text-align: center;
+  }
+  .mobile-btn-tmargin {
+    margin-top: 10px;
+  }
+  .no-padding {
+    padding: 0;
+  }
+  #live_search {
+    padding: 10px;
+  }
+}
+
+/* #### Mobile Phones Landscape #### */
+@media screen and (max-device-width: 640px) and (orientation: landscape){
+  .slider.slider-horizontal {
+      width: 275px;
+      height: 75px;
+  }
+  .slider .tooltip.top {
+      margin-top: -4px;
+  }
+  .distButton {
+    margin-top: 10px;
+  }
+}
+
+/* #### Mobile Phones Portrait or Landscape #### */
+@media screen and (max-device-width: 640px){
+  .slider.slider-horizontal {
+      width: 275px;
+      height: 75px;
+  }
+  .slider .tooltip.top {
+      margin-top: -4px;
+  }
+  .distButton {
+    margin-top: 10px;
+  }
+}
+
+/* #### iPhone 4+ Portrait or Landscape #### */
+@media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2){
+  .slider.slider-horizontal {
+      width: 275px;
+      height: 75px;
+  }
+  .slider .tooltip.top {
+      margin-top: -4px;
+  }
+  .distButton {
+    margin-top: 10px;
+  }
+}
+
+/* #### iPhone 5 Portrait or Landscape #### */
+@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2){
+  .slider.slider-horizontal {
+      width: 275px;
+      height: 75px;
+  }
+  .slider .tooltip.top {
+      margin-top: -4px;
+  }
+  .distButton {
+    margin-top: 10px;
+  }
+}
+
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
+@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3){
+  .slider.slider-horizontal {
+      width: 275px;
+      height: 75px;
+  }
+  .slider .tooltip.top {
+      margin-top: -4px;
+  }
+  .distButton {
+    margin-top: 10px;
+  }
+}
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px){
+  /* some CSS here */
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1024px){
+  .modal-body{
+    max-height: 425px;
+    overflow-y: auto;
+  }
+  .show_map {
+    height: 400px;
+  }
+  .pull-right-desktop {
+    text-align: right;
+  }
+  .pull-left-desktop {
+    text-align: left;
+  }
+  .pull-center-desktop {
+    text-align: center;
+  }
+  .slider.slider-horizontal {
+      width: 275px;
+      height: 50px;
+  }
+  .slider .tooltip.top {
+      margin-top: -17px;
+  }
+  .distButton {
+    margin-top: 0px;
+  }
+}
+
+/* #### All Mobile #### */
+@media screen and (max-width: 768px){
+  
+  .jumbotron {
+    padding: 10px;
+  }
+  
+  .rest-name-mobile {
+    font-size: 22px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+  }
+  
+  p.rest-link-mobile {
+    font-size: 16px;
+  }
+  
+  .admin-btn-mbl {
+    margin-left: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+	#tbl-responsive {
+	  padding-left: 50%;
+	}
+  /* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+	td.appetizers:nth-of-type(1):before { content: "Appetizer"; font-weight: bold; }
+	td.appetizers:nth-of-type(2):before { content: "Restaurant"; font-weight: bold; }
+  td.appetizers:nth-of-type(3):before { content: "Category"; font-weight: bold; }
+	td.appetizers:nth-of-type(4):before { content: "Price"; font-weight: bold; }
+	td.appetizers:nth-of-type(5):before { content: "Distance"; font-weight: bold; }
+	td.appetizers:nth-of-type(6):before { content: "Open Now?"; font-weight: bold; }
+	td.appetizers:nth-of-type(7):before { content: "Review"; font-weight: bold; }
+	td.restaurants:nth-of-type(1):before { content: "Name"; font-weight: bold; }
+	td.restaurants:nth-of-type(2):before { content: "Address"; font-weight: bold; }
+	td.categories:nth-of-type(1):before { content: "Name"; font-weight: bold; }
+	td.categories:nth-of-type(2):before { content: "Symbol"; font-weight: bold; }
+	td.users:nth-of-type(1):before { content: "Name"; font-weight: bold; }
+	td.users:nth-of-type(2):before { content: "Email"; font-weight: bold; }
+  td.users:nth-of-type(3):before { content: "Admin?"; font-weight: bold; }
+	td.users:nth-of-type(4):before { content: "Grant Admin?"; font-weight: bold; }
+	td.adrest_pick:nth-of-type(1):before { content: "Name"; font-weight: bold; }
+	td.adrest_pick:nth-of-type(2):before { content: "Address"; font-weight: bold; }
+  td.adrest_pick:nth-of-type(3):before { content: "Review"; font-weight: bold; }
+	td.adrest_pick:nth-of-type(4):before { content: "Add to Site?"; font-weight: bold; }
+	td.adrest_pick:nth-of-type(5):before { content: "Added By"; font-weight: bold; }
+	td.myrestaurants:nth-of-type(1):before { content: "Name"; font-weight: bold; }
+	td.myrestaurants:nth-of-type(2):before { content: "Website"; font-weight: bold; }
+	td.myrestaurants:nth-of-type(3):before { content: "Address"; font-weight: bold; }
+	td.myrestaurants:nth-of-type(4):before { content: "# of Apps"; font-weight: bold; }
+	td.rest-apps:nth-of-type(1):before { content: "App"; font-weight: bold; }
+	td.rest-apps:nth-of-type(2):before { content: "Cost"; font-weight: bold; }
+	td.rest-apps:nth-of-type(3):before { content: "Rating"; font-weight: bold; }
+  td.rest-apps:nth-of-type(4):before { content: ""; font-weight: bold; }
+}
+
+div.modal-body {
+  #tbl-responsive {
+	  padding-left: 0;
+	}
+  
+	table { 
+		display: table;
+	}
+	
+	thead {
+	  display: table-header-group;
+	}
+	
+	tbody {
+	  display: table-row-group;
+	}
+	
+	th {
+	  display: table-cell;
+	}
+	
+	td {
+	  display: table-cell;
+	}
+	
+	tr {
+	  display: table-row;
+	}
+	
+	thead tr { 
+		position: relative;
+	}
+	
+	tr { border: none; }
+	
+	td {
+		padding-left: 0; 
+	}
+	
+	td:before { 
+		position: relative;
+	}
+}
+
+table#hours-table {
+  #tbl-responsive {
+	  padding-left: 0;
+	}
+  
+	table { 
+		display: table;
+	}
+	
+	thead {
+	  display: table-header-group;
+	}
+	
+	tbody {
+	  display: table-row-group;
+	}
+	
+	th {
+	  display: table-cell;
+	}
+	
+	td {
+	  display: table-cell;
+	  border-bottom: none;
+	}
+	
+	tr {
+	  display: table-row;
+	}
+	
+	thead tr { 
+		position: relative;
+	}
+	
+	tr { border: none; }
+	
+	td {
+		padding-left: 0; 
+	}
+	
+	td:before { 
+		position: relative;
+	}
+	
+	.hours-mobile {
+	  margin-left: 60px;
+	}
+}
+
+table#review-table {
+  #tbl-responsive {
+	  padding-left: 0;
+	}
+  
+	table { 
+		display: table;
+	}
+	
+	thead {
+	  display: table-header-group;
+	}
+	
+	tbody {
+	  display: table-row-group;
+	}
+	
+	th {
+	  display: table-cell;
+	}
+	
+	td {
+	  display: table-cell;
+	  border-bottom: none;
+	}
+	
+	tr {
+	  display: table-row;
+	}
+	
+	thead tr { 
+		position: relative;
+	}
+	
+	tr { border: none; }
+	
+	td {
+		padding-left: 0; 
+	}
+	
+	td:before { 
+		position: relative;
+	}
+	
+	.review-mobile {
+	  margin-left: 60px;
+	}
+}
+
+@media (min-width: 768px) {
+  .navbar-right {
+      margin-right: -30px;
+  }
+  
+  .app-open {
+    text-align: center;
+  }
+  
+  .admin-btn-mbl {
+    margin-left: 5px;
+  }
+  .non-mobile-center {
+    text-align: center;
+  }
+}
+
+.welcome-backer {
+  background-color: #eee;
+  border-radius: 6px;
+}
+
+.page-header {
+  border-bottom: 2px solid #CCCCCC;
+  margin-right: 32px;
+}
+
+.map-settings {
+  padding: 10px;
+  background-color: #4285F4;
+  height: 400px;
+  box-shadow: 4px 4px 2px #888888;
+}
+
+.time-block {
+  background-color: #363636;
+  min-height: 291px;
+}
+
+.time-font {
+  color: #FFFEFF;
+  text-align: center;
+}
+
+#hours-table tbody tr td {
+  margin: 3px 0px 3px 0px;
+}
+
+.jumbotron {
+  margin-bottom: 0;
+}
+
+.time-block:hover .hours-edit {
+	display: block;
+}
+
+.hours-edit {
+	padding-top: 7px;	
+	padding-right: 7px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+
+.hours-edit a {
+	color: #fff;
+}
+
+.review-block {
+  background-color: #5E0000;
+  height: 302px;
+}
+
+.review-font {
+  color: #FFFEFF;
+  text-align: center;
+}
+
+#review-table tbody tr td {
+  margin: 3px 0px 3px 0px;
+}
+
+.review-in-block {
+  height: 198px;
+  width: 100%;
+}
+
+.review-block:hover .review-new {
+	display: block;
+}
+
+.review-new {
+	padding-top: 7px;	
+	padding-right: 7px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+
+.review-new a {
+	color: #fff;
+}
+
+.review-none {
+  color: #fff;
+  text-align: center;
+  top: 75px;
+  position: relative;
+  font-size: 18px;
+}
+
+.tbl-review {
+  color: #FFFEFF; 
+  display: table; 
+  width: 100%
+}
+
+.clickableRow:hover .app-cmmt {
+  display: block;
+}
+
+.nonclickableRow:hover .app-cmmt {
+  display: block;
+}
+
+.app-cmmt {
+	display: none;
+	text-align: center;
+}
+
+.app-cmmt a {
+	color: #000;
+}
+
+.star-ratings-sprite {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+  font-size: 0;
+  height: 21px;
+  line-height: 0;
+  overflow: hidden;
+  text-indent: -999em;
+  width: 110px;
+  margin: 0 auto;
+  
+  &-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display: block;
+  }
+}
+
+.res-star-ratings-sprite {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+  background-size: 13px;
+  font-size: 0;
+  height: 13px;
+  line-height: 0;
+  overflow: hidden;
+  text-indent: -999em;
+  width: 66px;
+  
+  &-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-size: 13px;
+    background-position: 0 100%;
+    float: left;
+    height: 13px;
+    display: block;
+  }
+}
+
+.rate-td {
+  width: 75px;
+}
+
+.review-td {
+  font-size: 10px;
+}
+
+.review-more {
+  display: none;
+}
+
+.review-header {
+  color: #FFFEFF;
+  border-bottom: thin solid #ffffff;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.review-header-txt {
+  font-size: 11px;
+  margin: 0;
+}
+
+.review-txt-more {
+  color: #FFFEFF;
+}
+
+.review-txt-more:hover {
+  text-decoration: none;
+  color: #FFFEFF;
+}
+
+.mhead {
+  text-align: center;
+}
+
+.myLocBtn {
+  background-image: url("/assets/mylocation-sprite-1x.png");
+  background-position: 0 0;
+  height: 18px;
+  width: 18px;
+  margin: 6px 0px;
+}
+
+.rest-rating {
+  margin: 0px 0px 16px 0px;
+}
