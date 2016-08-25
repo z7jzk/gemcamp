@@ -16,7 +16,7 @@ io.on('connection', function (socket) {
   });
   
   socket.emit('message', {
-    text: 'Welcome to the chat application!'
+    text: 'Welcome to the official app of GEM Camp 2.0!'
   });
 });
 
