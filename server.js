@@ -100,48 +100,48 @@ app.post('/update_namevar', function(req, res){
 });
 
 // POST Whiteboard Items
-// app.post('/wbitems', function (req, res) {
-//   var body = _.pick(req.body, 'name', 'mtext', 'time');
+app.post('/wbitems', function (req, res) {
+  var body = _.pick(req.body, 'name', 'mtext', 'time');
   
-//   // verify data submission integrity
-//   if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.mtext) || body.mtext.trim().length === 0) {
-//     return res.status(400).send();
-//   }
+  // verify data submission integrity
+  if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.mtext) || body.mtext.trim().length === 0) {
+    return res.status(400).send();
+  }
   
-//   body.mtext = body.mtext.trim();
-//   body.name = body.name.trim();
+  body.mtext = body.mtext.trim();
+  body.name = body.name.trim();
   
-//   // post data to the db
-//   db.wblist.create(body).then(function (wblist) {
-//       res.json(wblist.toJSON());
-//     }, function (e) {
-//       res.status(400).json(e);
-//   });
-// });
+  // post data to the db
+  db.wblist.create(body).then(function (wblist) {
+      res.json(wblist.toJSON());
+    }, function (e) {
+      res.status(400).json(e);
+  });
+});
 
 // GET 
-// app.get('/wball', function (req, res) {
-//   var query = req.query;
-//   var where = {};
+app.get('/wball', function (req, res) {
+  var query = req.query;
+  var where = {};
   
-//   // set up where parameters
-//   if (query.hasOwnProperty('completed') && query.completed == 'true') {
-//     where.completed = true;
-//   } else if (query.hasOwnProperty('completed') && query.completed == 'false') {
-//     where.completed = false;
-//   } else if (query.hasOwnProperty('q') && query.q.trim().length > 0) {
-//     where.description = {
-//       $like: '%' + query.q + '%'
-//     };
-//   }
+  // set up where parameters
+  if (query.hasOwnProperty('completed') && query.completed == 'true') {
+    where.completed = true;
+  } else if (query.hasOwnProperty('completed') && query.completed == 'false') {
+    where.completed = false;
+  } else if (query.hasOwnProperty('q') && query.q.trim().length > 0) {
+    where.description = {
+      $like: '%' + query.q + '%'
+    };
+  }
   
-//   // make call to db
-//   db.wblist.findAll({where: where}).then(function (wblist) {
-//     res.json(wblist);
-//   }, function (e) {
-//     res.status(500).send();
-//   });
-// });
+  // make call to db
+  db.wblist.findAll({where: where}).then(function (wblist) {
+    res.json(wblist);
+  }, function (e) {
+    res.status(500).send();
+  });
+});
 
 db.sequelize.sync().then(function () {
   http.listen(PORT, function () {
