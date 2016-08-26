@@ -717,3 +717,13 @@ table#review-table {
 .rest-rating {
   margin: 0px 0px 16px 0px;
 }
+
+.page-links {
+  text-decoration: none;
+  color: #171717;
+}
+
+.page-links:hover {
+  text-decoration: none;
+  color: #4A4A4A;
+}
