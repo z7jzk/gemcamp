@@ -143,8 +143,8 @@ app.get('/wball', function (req, res) {
   });
 });
 
-db.sequelize.sync().then(function () {
-  http.listen(PORT, function () {
-    console.log('Server started!');
-  });
-});
+// db.sequelize.sync().then(function () {
+//   http.listen(PORT, function () {
+//     console.log('Server started!');
+//   });
+// });
