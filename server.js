@@ -18,6 +18,7 @@ io.on('connection', function (socket) {
   });
   
   socket.emit('message', {
+    name: 'System',
     text: 'Welcome to the official app of GEM Camp 2.0!',
     timestamp: moment().valueOf()
   });

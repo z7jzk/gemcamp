@@ -1,5 +1,5 @@
 var moment = require('moment');
-var now = moment().utcOffset("-05:00");;
+var now = moment().utcOffset("-05:00");
 
 // console.log(now.format());
 // console.log(now.format('X'));

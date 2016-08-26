@@ -1,3 +1,5 @@
+var name = getQueryVariable('name') || 'Anonymous';
+var room = getQueryVariable('room');
 var socket = io();
 
 socket.on('connect', function () {
@@ -5,11 +7,15 @@ socket.on('connect', function () {
 });
 
 socket.on('message', function (message) {
+    if (!message.name) {
+        message.name = name;
+    }
     var momentTimestamp = moment().utcOffset("-05:00");
+    var $message = $('.messages');
     console.log('New message:');
     console.log(message.text);
     
-    $('.messages').append('<span style="display: block; padding: 10px 10px;">'+ '<i><small><strong>' + momentTimestamp.format('h:mm a') + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + '<p style="display: inline;">' + message.text + '</p>' + '</span>');
+    $message.append('<span style="display: block; padding: 10px 0;"><i><strong>' + message.name + ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + momentTimestamp.format('h:mm a') + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + '<p style="display: inline;">' + message.text + '</p>' + '</span>');
 });
 
 // Handles submitting of new message
