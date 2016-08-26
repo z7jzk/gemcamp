@@ -62,10 +62,6 @@ io.on('connection', function (socket) {
   });
 });
 
-if (app.locals.name) {
-  var usname = app.locals.name;
-}
-
 app.get('/chat', function (req, res) {
   res.render('chat',{title: "Chat Setup", user_name: globalName});
 });
