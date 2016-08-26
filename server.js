@@ -116,10 +116,34 @@ app.post('/wbitems', function (req, res) {
   body.name = body.name.trim();
   
   // post data to the db
-  db.wblist.create(body).then(function (todo) {
+  db.wblist.create(body).then(function (wblist) {
       res.json(wblist.toJSON());
     }, function (e) {
       res.status(400).json(e);
+  });
+});
+
+// GET 
+app.get('/wball', function (req, res) {
+  var query = req.query;
+  var where = {};
+  
+  // set up where parameters
+  if (query.hasOwnProperty('completed') && query.completed == 'true') {
+    where.completed = true;
+  } else if (query.hasOwnProperty('completed') && query.completed == 'false') {
+    where.completed = false;
+  } else if (query.hasOwnProperty('q') && query.q.trim().length > 0) {
+    where.description = {
+      $like: '%' + query.q + '%'
+    };
+  }
+  
+  // make call to db
+  db.wblist.findAll({where: where}).then(function (wblist) {
+    res.json(wblist);
+  }, function (e) {
+    res.status(500).send();
   });
 });
 
