@@ -6,10 +6,16 @@
   "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "async": "~2.0.1",
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.1",
     "express": "~4.14.0",
     "moment": "^2.10.6",
     "pg": "^6.1.0",
-    "socket.io": "~1.4.8"
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.5.1",
+    "socket.io": "~1.4.8",
+    "sqlite3": "^3.1.4",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "start": "node server.js"

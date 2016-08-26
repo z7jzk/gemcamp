@@ -32,3 +32,38 @@ $form.on('submit', function (event) {
     
     $message.val('');
 });
+
+var $name = $('#name-form');
+
+$name.on('submit', function (event) {
+    event.preventDefault();
+    
+    var $user_name = $('#name').val();
+    
+    // $('#name-modal').modal('hide');
+    
+    if ($user_name == '') {
+        window.alert('Name cannot be blank! Please put in your full name!');
+    } else {
+        send_name_server($user_name);
+    }
+    
+    //$('#name-modal').modal('hide');
+    
+});
+
+function send_name_server (user_name) {
+    var send_name = $.ajax({
+      type: 'post',
+      url: "/update_namevar",
+      remote: true,
+      data: {name: user_name},
+      dataType: 'json'
+    }).done(function( data ) {
+        //console.log(data);
+        //$('#name-modal').modal('hide');
+    }).fail(function (jqXHR, textStatus) {
+        $('#name-modal').modal('hide');
+        location.reload();
+    });
+}

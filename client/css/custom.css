@@ -720,10 +720,11 @@ table#review-table {
 
 .page-links {
   text-decoration: none;
-  color: #171717;
+  color: inherit;
 }
 
 .page-links:hover {
   text-decoration: none;
-  color: #4A4A4A;
+  color: #ffffff;
+  cursor: pointer;
 }
