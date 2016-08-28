@@ -4,7 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var moment = require('moment');
-//var db = require('./db.js');
+var db = require('./db.js');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var globalName;
@@ -96,8 +96,8 @@ app.get('/', function(req, res){
 });
 
 app.post('/update_namevar', function(req, res){
-globalName = req.body.name;
-res.end();
+  globalName = req.body.name;
+  res.end();
 });
 
 // // POST Whiteboard Items
@@ -144,8 +144,8 @@ res.end();
 //   });
 // });
 
-//db.sequelize.sync().then(function () {
+db.sequelize.sync().then(function () {
   http.listen(PORT, function () {
     console.log('Server started!');
   });
-//});
+});
