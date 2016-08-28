@@ -95,10 +95,10 @@ app.get('/', function(req, res){
  res.render('index',{title: "GEM Camp 2.0 - Home", user_name: globalName});
 });
 
-// app.post('/update_namevar', function(req, res){
-// globalName = req.body.name;
-// res.end();
-// });
+app.post('/update_namevar', function(req, res){
+globalName = req.body.name;
+res.end();
+});
 
 // // POST Whiteboard Items
 // app.post('/wbitems', function (req, res) {
