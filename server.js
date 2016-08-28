@@ -4,7 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var moment = require('moment');
-var db = require('./db.js');
+//var db = require('./db.js');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var globalName;
