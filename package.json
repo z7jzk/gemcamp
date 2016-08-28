@@ -1,9 +1,9 @@
 {
-  "name": "chat-example",
-  "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "name": "gem-camp",
+  "version": "2.0.1",
+  "description": "Official app of GEM Camp",
   "main": "server.js",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "Josh Kyburz (kyburzjz@gmail.com)",
   "dependencies": {
     "async": "~2.0.1",
     "body-parser": "^1.15.2",
