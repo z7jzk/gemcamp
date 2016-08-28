@@ -13,7 +13,7 @@ var globalName;
 app.use(express.static(__dirname + '/client'));
 app.set('views', __dirname + '/client');
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 var clientInfo = {};
 
