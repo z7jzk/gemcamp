@@ -144,8 +144,8 @@ app.get('/', function(req, res){
 //   });
 // });
 
-db.sequelize.sync().then(function () {
+//db.sequelize.sync().then(function () {
   http.listen(PORT, function () {
     console.log('Server started!');
   });
-});
+//});
