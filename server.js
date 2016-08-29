@@ -87,7 +87,11 @@ app.get('/uber', function (req, res) {
 });
 
 app.get('/', function(req, res){ 
- res.render('index',{title: "GEM Camp 2.0 - Home", user_name: globalName});
+ res.render('index',{title: "GEM Camp 3.0 - Home", user_name: globalName});
+});
+
+app.get('/buddy-tracker', function(req, res){ 
+ res.render('buddy-tracker',{title: "Buddy Tracking", user_name: globalName});
 });
 
 app.post('/update_namevar', function(req, res){

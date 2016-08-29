@@ -728,3 +728,7 @@ table#review-table {
   color: #ffffff;
   cursor: pointer;
 }
+
+#map {
+  height: 400px;
+}
