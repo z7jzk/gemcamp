@@ -99,7 +99,7 @@ app.post('/update_namevar', function(req, res){
 // POST Whiteboard Items
 app.post('/wbitems', function (req, res) {
   console.log('post item started');
-  var body = _.pick(req.body, 'name', 'mtext', 'time');
+  var body = _.pick(req.body, 'name', 'mtext');
   
   // verify data submission integrity
   if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.mtext) || body.mtext.trim().length === 0) {

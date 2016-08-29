@@ -10,10 +10,6 @@ module.exports = function (sequelize, DataTypes) {
         mtext: {
             type: DataTypes.TEXT,
             allowNull: false
-        },
-        time: {
-            type: DataTypes.DATE,
-            allowNull: false
         }
     });
 };
