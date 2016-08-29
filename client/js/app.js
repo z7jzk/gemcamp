@@ -45,12 +45,12 @@ $form.on('submit', function (event) {
         var send_name = $.ajax({
           type: 'post',
           url: "/wbitems",
-          data: {name: $name.val(), mtext: $message.val(), time: momentTimestamp},
+          data: {name: $name.val(), mtext: $message.val()},
           dataType: 'json'
         }).done(function( data ) {
             
         }).fail(function (jqXHR, textStatus) {
-            
+            alert('Chat failed to post to database. Chat was not saved. Please try again.');
         });
       //}
     
