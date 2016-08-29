@@ -1,3 +1,5 @@
+//var requirejs = require('requirejs');
+//var nameModule = requirejs('../server.js');
 var name = getQueryVariable('name') || 'Anonymous';
 var room = getQueryVariable('room');
 var socket = io();
@@ -15,7 +17,10 @@ socket.on('message', function (message) {
     console.log('New message:');
     console.log(message.text);
     
-    $message.append('<span style="display: block; padding: 10px 0;"><i><strong>' + message.name + ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + momentTimestamp.format('h:mm a') + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + '<p style="display: inline;">' + message.text + '</p>' + '</span>');
+    $message.prepend('<span style="display: block; padding: 10px 0;"><i><strong>' + 
+        message.name + ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + 
+        momentTimestamp.fromNow() + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 
+        '<p style="display: inline;">' + message.text + '</p>' + '</span>');
 });
 
 // Handles submitting of new message
@@ -24,11 +29,30 @@ var $form = $('#message-form');
 $form.on('submit', function (event) {
     event.preventDefault();
     
+    var momentTimestamp = moment().utcOffset("-05:00").fromNow();
     var $message = $form.find('input[name=message]');
+    var $name = $form.find('input[name=name]');
     
     socket.emit('message', {
-        text: $message.val()
+        text: $message.val(),
+        name: $name.val(),
+        time: momentTimestamp
     });
+    
+    //function sendChats() {
+        //var momentTimestamp = moment().utcOffset("-05:00").format('h:mm a');
+        //var message_text = $('#m').val();
+        var send_name = $.ajax({
+          type: 'post',
+          url: "/wbitems",
+          data: {name: $name.val(), mtext: $message.val(), time: momentTimestamp},
+          dataType: 'json'
+        }).done(function( data ) {
+            
+        }).fail(function (jqXHR, textStatus) {
+            
+        });
+      //}
     
     $message.val('');
 });
@@ -53,17 +77,16 @@ $name.on('submit', function (event) {
 });
 
 function send_name_server (user_name) {
+    console.log({name: user_name});
     var send_name = $.ajax({
       type: 'post',
       url: "/update_namevar",
-      remote: true,
-      data: {name: user_name},
-      dataType: 'json'
+      data: {name: user_name}
     }).done(function( data ) {
-        //console.log(data);
-        //$('#name-modal').modal('hide');
-    }).fail(function (jqXHR, textStatus) {
         $('#name-modal').modal('hide');
         location.reload();
+    }).fail(function (jqXHR, textStatus) {
+        $('#name-modal').modal('hide');
+        alert('Error: Server could not set name. Please reload and try again.');
     });
 }

@@ -25,6 +25,7 @@
           <div class="row">
             <div class="col-sm-10">
               <input id = "m" type="text" name="message" class="form-control">
+              <input type="hidden" name="name" value="<%= user_name %>">
             </div>
             <div class="col-sm-2">
               <input type="submit" value="submit" class="btn btn-primary">
@@ -42,35 +43,37 @@
     <%- include('scripts') %>
     <script>
       function loadChats() {
-        var momentTimestamp = moment().utcOffset("-05:00").format('h:mm a');
-        var message_text = $('#m').val();
-        var send_name = $.ajax({
-          type: 'get'
-          url: "/wbitems",
-          remote: true
+        //var momentTimestamp = moment().utcOffset("-05:00").format('h:mm a');
+        //var message_text = $('#m').val();
+        var receive_chats = $.ajax({
+          type: 'get',
+          url: "/wball",
+          dataType: 'json'
         }).done(function( data ) {
-            //console.log(data);
-            //$('#name-modal').modal('hide');
+          displayChats(data);
         }).fail(function (jqXHR, textStatus) {
-            alert('Chats Returned!');
+          alert('Failed to get chats');
         });
       }
       
-      function sendChats() {
-        var momentTimestamp = moment().utcOffset("-05:00").format('h:mm a');
-        var message_text = $('#m').val();
-        var send_name = $.ajax({
-          type: 'post'
-          url: "/wbitems",
-          remote: true,
-          data: {name: user_name, mtext: message_text, time: momentTimestamp},
-          dataType: 'json'
-        }).done(function( data ) {
-            //console.log(data);
-            //$('#name-modal').modal('hide');
-        }).fail(function (jqXHR, textStatus) {
-            alert('Chat Posted!');
-        });
+      function displayChats (receive_chats) {
+        var $message = $('.messages');
+        
+        if (receive_chats.constructor === Array) {
+          for (var i=0;i<receive_chats.length;i++) {
+            $message.append('<span style="display: block; padding: 10px 0;"><i><strong>' + receive_chats[i].name + 
+            ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + 
+            moment(receive_chats[i].createdAt).fromNow() + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 
+            '<p style="display: inline;">' + receive_chats[i].mtext + '</p>' + '</span>');
+          }
+        } else {
+          if (!jQuery.isEmptyObject(receive_chats)) {
+            $message.append('<span style="display: block; padding: 10px 0;"><i><strong>' + receive_chats.name + 
+            ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + 
+            moment(receive_chats.createdAt).fromNow() + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 
+            '<p style="display: inline;">' + receive_chats.mtext + '</p>' + '</span>');
+          }
+        }
       }
       
       loadChats();

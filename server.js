@@ -13,9 +13,10 @@ var globalName;
 app.use(express.static(__dirname + '/client'));
 app.set('views', __dirname + '/client');
 app.set('view engine', 'ejs');
-//app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
 
+exports.name = globalName;
 var clientInfo = {};
 
 // sends current users to provided socket
@@ -46,7 +47,7 @@ io.on('connection', function (socket) {
   console.log('User connected via socket.io!');
   
   socket.on('message', function (message) {
-    console.log('Message received: ' + message.text);
+    console.log('Message received from ' + message.name + ' at ' + message.time + ': ' + message.text);
     
     if (message.text == '@currentUsers') {
       sendCurrentUsers(socket);
@@ -54,12 +55,6 @@ io.on('connection', function (socket) {
       message.timestamp = moment().valueOf();
       io.emit('message', message);
     }
-  });
-  
-  socket.emit('message', {
-    name: 'System',
-    text: 'Welcome to the official app of GEM Camp 2.0!',
-    timestamp: moment().valueOf()
   });
 });
 
@@ -96,53 +91,55 @@ app.get('/', function(req, res){
 });
 
 app.post('/update_namevar', function(req, res){
-  globalName = req.body.name;
-  res.end();
+  var body = _.pick(req.body, 'name');
+  globalName = body.name;
+  res.send();
 });
 
-// // POST Whiteboard Items
-// app.post('/wbitems', function (req, res) {
-//   var body = _.pick(req.body, 'name', 'mtext', 'time');
+// POST Whiteboard Items
+app.post('/wbitems', function (req, res) {
+  console.log('post item started');
+  var body = _.pick(req.body, 'name', 'mtext', 'time');
   
-//   // verify data submission integrity
-//   if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.mtext) || body.mtext.trim().length === 0) {
-//     return res.status(400).send();
-//   }
+  // verify data submission integrity
+  if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.mtext) || body.mtext.trim().length === 0) {
+    return res.status(400).send();
+  }
   
-//   body.mtext = body.mtext.trim();
-//   body.name = body.name.trim();
+  body.mtext = body.mtext.trim();
+  body.name = body.name.trim();
   
-//   // post data to the db
-//   db.wblist.create(body).then(function (wblist) {
-//       res.json(wblist.toJSON());
-//     }, function (e) {
-//       res.status(400).json(e);
-//   });
-// });
+  // post data to the db
+  db.wblist.create(body).then(function (wblist) {
+      res.json(wblist.toJSON());
+    }, function (e) {
+      res.status(400).json(e);
+  });
+});
 
-// // GET 
-// app.get('/wball', function (req, res) {
-//   var query = req.query;
-//   var where = {};
+// GET 
+app.get('/wball', function (req, res) {
+  var query = req.query;
+  var where = {};
   
-//   // set up where parameters
-//   if (query.hasOwnProperty('completed') && query.completed == 'true') {
-//     where.completed = true;
-//   } else if (query.hasOwnProperty('completed') && query.completed == 'false') {
-//     where.completed = false;
-//   } else if (query.hasOwnProperty('q') && query.q.trim().length > 0) {
-//     where.description = {
-//       $like: '%' + query.q + '%'
-//     };
-//   }
+  // set up where parameters
+  if (query.hasOwnProperty('completed') && query.completed == 'true') {
+    where.completed = true;
+  } else if (query.hasOwnProperty('completed') && query.completed == 'false') {
+    where.completed = false;
+  } else if (query.hasOwnProperty('q') && query.q.trim().length > 0) {
+    where.description = {
+      $like: '%' + query.q + '%'
+    };
+  }
   
-//   // make call to db
-//   db.wblist.findAll({where: where}).then(function (wblist) {
-//     res.json(wblist);
-//   }, function (e) {
-//     res.status(500).send();
-//   });
-// });
+  // make call to db
+  db.wblist.findAll({where: where, order: [['createdAt', 'DESC']]}).then(function (wblist) {
+    res.json(wblist);
+  }, function (e) {
+    res.status(500).send();
+  });
+});
 
 db.sequelize.sync().then(function () {
   http.listen(PORT, function () {
