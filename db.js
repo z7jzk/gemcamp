@@ -17,6 +17,7 @@ var db = {};
 
 db.wblist = sequelize.import(__dirname + '/models/wblist.js');
 db.likes = sequelize.import(__dirname + '/models/likes.js');
+db.peopTable = sequelize.import(__dirname + '/models/peopTable.js');
 db.sequelize = sequelize;
 
 module.exports = db;

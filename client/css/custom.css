@@ -732,3 +732,30 @@ table#review-table {
 #map {
   height: 400px;
 }
+
+.ptableheader {
+  text-align: center;
+  padding-top: 10px;
+  font-size: 18px;
+  border-bottom-style: solid;
+}
+
+.ptable-container {
+  background-color: #0D287F;
+  color: #fff;
+  min-height: 400px;
+  padding: 10px;
+}
+
+.bar-cell {
+  max-width: 180px;
+  word-wrap: break-word;
+}
+
+.clickableRow:hover {
+  background-color: #153EC2;
+}
+
+.barRow {
+  padding: 5px 0 5px 0;
+}

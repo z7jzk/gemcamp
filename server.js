@@ -145,6 +145,70 @@ app.get('/wball', function (req, res) {
   });
 });
 
+// POST User Location for Buddy Tracker
+app.post('/updateploc', function (req, res) {
+  console.log('location update started');
+  var body = _.pick(req.body, 'name', 'uloc', 'id', 'active');
+  var attributes = {};
+  
+  if (!body.id) {
+    // verify data submission integrity
+    if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.uloc) || body.uloc.trim().length === 0) {
+      return res.status(400).send();
+    }
+    
+    body.uloc = body.uloc.trim();
+    body.name = body.name.trim();
+    
+    // post data to the db
+    db.peopTable.create(body).then(function (peopTable) {
+        res.json(peopTable.toJSON());
+      }, function (e) {
+        res.status(400).json(e);
+    });
+  } else {
+    attributes.uloc = body.uloc;
+    // update data to the db
+    db.peopTable.findById(body.id).then(function (locData) {
+      if (locData) {
+        locData.update(attributes).then(function (locData){
+          res.json(locData.toJSON());
+        }, function (e) {
+          res.status(400).json(e);
+        });
+      } else {
+        res.status(404).send();
+      }
+    }, function () {
+      res.status(500).send();
+    });
+  }
+});
+
+// GET User Location for Buddy Tracker
+app.get('/getploc', function (req, res) {
+  var dateEnd = new Date();
+  
+  var dd = dateEnd.getDate()-1;
+  var mm = dateEnd.getMonth(); 
+  var yyyy = dateEnd.getFullYear();
+  
+  var dateStart = new Date (mm + '/' + dd + '/' + yyyy);
+  
+  var where = {
+    createdAt: {
+      $between: [dateStart,dateEnd]
+    }
+  };
+  
+  // make call to db
+  db.peopTable.findAll({where: where, order: [['createdAt', 'DESC']]}).then(function (peopTable) {
+    res.json(peopTable);
+  }, function (e) {
+    res.status(500).send();
+  });
+});
+
 db.sequelize.sync().then(function () {
   http.listen(PORT, function () {
     console.log('Server started!');

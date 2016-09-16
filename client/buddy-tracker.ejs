@@ -12,19 +12,41 @@
         <h1>Buddy Tracking</h1>
       </div>
       <br>
-      <div id="map"></div>
+      <div class="row">
+        <div class="col-md-8">
+          <div id="map"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="ptable-container">
+            <table id="peopleTable" style="width: 100%; table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th class="ptableheader" style="width: 100px;">User</th>
+                  <th class="ptableheader">Currently Near</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <script>
         // Note: This example requires that you consent to location sharing when
         // prompted by your browser. If you see the error "The Geolocation service
         // failed.", it means you probably did not give permission for the browser to
         // locate you.
     
+        var map;
+        var infoWindow;
+    
         function initMap() {
-          var map = new google.maps.Map(document.getElementById('map'), {
+          map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
-            zoom: 6
+            zoom: 14
           });
-          var infoWindow = new google.maps.InfoWindow({map: map});
+          infoWindow = new google.maps.InfoWindow({map: map});
     
           // Try HTML5 geolocation.
           if (navigator.geolocation) {
@@ -37,6 +59,14 @@
               infoWindow.setPosition(pos);
               infoWindow.setContent('Location found.');
               map.setCenter(pos);
+              
+              var service = new google.maps.places.PlacesService(map);
+              service.nearbySearch({
+                location: pos,
+                //radius: 1000,
+                types: ['bar'],
+                rankBy: google.maps.places.RankBy.DISTANCE
+              }, callback);
             }, function() {
               handleLocationError(true, infoWindow, map.getCenter());
             });
@@ -44,6 +74,115 @@
             // Browser doesn't support Geolocation
             handleLocationError(false, infoWindow, map.getCenter());
           }
+        }
+        
+        function callback(results, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            // for (var i = 0; i < results.length; i++) {
+            //   var place = results[i];
+            //   createMarker(results[i],i);
+            // }
+            createMarker(results[0],0);
+          }
+        }
+        
+        function createMarker(place,num) {
+          var clocation;
+          var placeLoc = place.geometry.location;
+          var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
+          });
+  
+          google.maps.event.addListener(marker, 'click', function() {
+            infoWindow.setContent(num + ' - ' + place.name);
+            infoWindow.open(map, this);
+          });
+          
+          clocation = place.name;
+          
+          var get_location = $.ajax({
+            type: 'get',
+            url: "/getploc",
+            dataType: 'json'
+          }).done(function( data ) {
+            check_existing(data, "<%= user_name %>", clocation);
+          }).fail(function (jqXHR, textStatus) {
+            console.log('Location db update failed!');
+          });
+        }
+    
+        function check_existing(locData, user, loc) {
+          var user_id;
+          var user_active = false;
+          
+          if (typeof locData == 'object') {
+            // First see if user is already active and in system
+            for (var i=0;i<locData.length;i++) {
+              if (locData[i].name == '<%= user_name %>' && user_active == false) {
+                user_id = locData[i].id;
+                user_active = true;
+              }
+            }
+            location_handler(locData, user, loc, user_active, user_id)
+          }
+        }
+        
+        function location_handler(locData, user, loc, user_active, user_id) {
+          if (user_active == true) {
+            // Update the existing user's location
+            var send_location = $.ajax({
+              type: 'post',
+              url: "/updateploc",
+              data: {id: user_id, uloc: loc, active: true},
+              dataType: 'json'
+            }).done(function( data ) {
+                alert('Your location was updated!');
+                user_active = true;
+            }).fail(function (jqXHR, textStatus) {
+                console.log('Location db update failed!');
+            });
+          } else if (user_active == false) {
+            var send_location = $.ajax({
+              type: 'post',
+              url: "/updateploc",
+              data: {name: "<%= user_name %>", uloc: loc},
+              dataType: 'json'
+            }).done(function( data ) {
+                alert(data.id + " active?=" + data.active);
+            }).fail(function (jqXHR, textStatus) {
+                console.log('Location db update failed!');
+            });
+          }
+          write_locs(locData, user, loc);
+        }
+        
+        function write_locs(locData, user, loc) {
+          var table = document.getElementById("peopleTable");
+          var row = table.insertRow(-1);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          row.setAttribute("id", "my-row");
+          row.setAttribute("class", "clickableRow");
+          cell1.innerHTML = user;
+          cell2.innerHTML = loc;
+          cell2.setAttribute("class", "bar-cell barRow");
+          
+          for (var i=0;i<locData.length;i++) {
+            if (locData[i].active == true && locData[i].name != user) {
+              var table = document.getElementById("peopleTable");
+              var row = table.insertRow(-1);
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              cell1.innerHTML = locData[i].name;
+              cell2.innerHTML = locData[i].uloc;
+              cell2.setAttribute("class", "bar-cell barRow");
+            }
+          }
+          
+          $('#my-row').click(function (event) {
+            window.alert('hi!');
+          });
         }
     
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -54,7 +193,7 @@
         }
       </script>
       <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpYhDqFTCk-oZf-orCCFwZAhO0WNTk1cY&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpYhDqFTCk-oZf-orCCFwZAhO0WNTk1cY&callback=initMap&libraries=places">
       </script>
       <!-- end body here -->
     </div>
