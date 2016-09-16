@@ -230,7 +230,7 @@ a.restaurant_web:hover {
 }
 
 /* #### Desktops #### */
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 1024px) {
   .modal-body{
     max-height: 425px;
     overflow-y: auto;
@@ -259,102 +259,10 @@ a.restaurant_web:hover {
   }
 }
 
-/* #### All Mobile #### */
-@media screen and (max-width: 768px){
-  
-  .jumbotron {
-    padding: 10px;
-  }
-  
-  .rest-name-mobile {
-    font-size: 22px;
-    margin-bottom: 16px;
-    margin-top: 8px;
-  }
-  
-  p.rest-link-mobile {
-    font-size: 16px;
-  }
-  
-  .admin-btn-mbl {
-    margin-left: 0;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  
-	#tbl-responsive {
-	  padding-left: 50%;
-	}
-  /* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	/*
-	Label the data
-	*/
-	td.appetizers:nth-of-type(1):before { content: "Appetizer"; font-weight: bold; }
-	td.appetizers:nth-of-type(2):before { content: "Restaurant"; font-weight: bold; }
-  td.appetizers:nth-of-type(3):before { content: "Category"; font-weight: bold; }
-	td.appetizers:nth-of-type(4):before { content: "Price"; font-weight: bold; }
-	td.appetizers:nth-of-type(5):before { content: "Distance"; font-weight: bold; }
-	td.appetizers:nth-of-type(6):before { content: "Open Now?"; font-weight: bold; }
-	td.appetizers:nth-of-type(7):before { content: "Review"; font-weight: bold; }
-	td.restaurants:nth-of-type(1):before { content: "Name"; font-weight: bold; }
-	td.restaurants:nth-of-type(2):before { content: "Address"; font-weight: bold; }
-	td.categories:nth-of-type(1):before { content: "Name"; font-weight: bold; }
-	td.categories:nth-of-type(2):before { content: "Symbol"; font-weight: bold; }
-	td.users:nth-of-type(1):before { content: "Name"; font-weight: bold; }
-	td.users:nth-of-type(2):before { content: "Email"; font-weight: bold; }
-  td.users:nth-of-type(3):before { content: "Admin?"; font-weight: bold; }
-	td.users:nth-of-type(4):before { content: "Grant Admin?"; font-weight: bold; }
-	td.adrest_pick:nth-of-type(1):before { content: "Name"; font-weight: bold; }
-	td.adrest_pick:nth-of-type(2):before { content: "Address"; font-weight: bold; }
-  td.adrest_pick:nth-of-type(3):before { content: "Review"; font-weight: bold; }
-	td.adrest_pick:nth-of-type(4):before { content: "Add to Site?"; font-weight: bold; }
-	td.adrest_pick:nth-of-type(5):before { content: "Added By"; font-weight: bold; }
-	td.myrestaurants:nth-of-type(1):before { content: "Name"; font-weight: bold; }
-	td.myrestaurants:nth-of-type(2):before { content: "Website"; font-weight: bold; }
-	td.myrestaurants:nth-of-type(3):before { content: "Address"; font-weight: bold; }
-	td.myrestaurants:nth-of-type(4):before { content: "# of Apps"; font-weight: bold; }
-	td.rest-apps:nth-of-type(1):before { content: "App"; font-weight: bold; }
-	td.rest-apps:nth-of-type(2):before { content: "Cost"; font-weight: bold; }
-	td.rest-apps:nth-of-type(3):before { content: "Rating"; font-weight: bold; }
-  td.rest-apps:nth-of-type(4):before { content: ""; font-weight: bold; }
-}
-
 div.modal-body {
-  #tbl-responsive {
-	  padding-left: 0;
-	}
+  div.modal-body#tbl-responsive {
+    padding-left: 0;
+  }
   
 	table { 
 		display: table;
@@ -395,7 +303,7 @@ div.modal-body {
 	}
 }
 
-table#hours-table {
+table #peopleTable {
   #tbl-responsive {
 	  padding-left: 0;
 	}
