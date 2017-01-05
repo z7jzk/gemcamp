@@ -57,6 +57,40 @@ $form.on('submit', function (event) {
     $message.val('');
 });
 
+// Handles submitting of new message
+var $form = $('#message-form-vegas');
+
+$form.on('submit', function (event) {
+    event.preventDefault();
+    
+    var momentTimestamp = moment().utcOffset("-05:00").fromNow();
+    var $message = $form.find('input[name=message]');
+    var $name = $form.find('input[name=name]');
+    
+    socket.emit('message', {
+        text: $message.val(),
+        name: $name.val(),
+        time: momentTimestamp
+    });
+    
+    //function sendChats() {
+        //var momentTimestamp = moment().utcOffset("-05:00").format('h:mm a');
+        //var message_text = $('#m').val();
+        var send_name = $.ajax({
+          type: 'post',
+          url: "/wbitemsv",
+          data: {name: $name.val(), mtext: $message.val()},
+          dataType: 'json'
+        }).done(function( data ) {
+            
+        }).fail(function (jqXHR, textStatus) {
+            alert('Chat failed to post to database. Chat was not saved. Please try again.');
+        });
+      //}
+    
+    $message.val('');
+});
+
 var $name = $('#name-form');
 
 $name.on('submit', function (event) {

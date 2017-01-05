@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title><%= title %></title>
+    <%- include('head') %>
+  </head>
+  <body>
+    <div class="container">
+      <%- include('header') %>
+      <!-- start body here -->
+      <div class="page-header">
+        <h1 style="">Welcome to The Whiteboard | Vegas Edition Baby!</h1>
+      </div>
+      <br>
+      <div>
+          <h3 id="sname" style="display: none;"></h3>
+      </div>
+      <br>
+      <a class="btn btn-default" href="/chat.html">Change Chat Details</a>
+      <br/>
+      <br/>
+      <br/>
+      <form id="message-form-vegas" class="form-horizontal">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-10">
+              <input id = "m" type="text" name="message" class="form-control">
+              <input type="hidden" name="name" value="<%= user_name %>">
+            </div>
+            <div class="col-sm-2">
+              <input type="submit" value="submit" class="btn btn-primary">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="messages">
+        <!-- messages go here -->
+      </div>
+    </div>
+    <!-- end body here -->
+    </div>
+    <%- include('footer') %>
+    <%- include('scripts') %>
+    <script>
+      function loadChats() {
+        //var momentTimestamp = moment().utcOffset("-05:00").format('h:mm a');
+        //var message_text = $('#m').val();
+        var receive_chats = $.ajax({
+          type: 'get',
+          url: "/wballv",
+          dataType: 'json'
+        }).done(function( data ) {
+          displayChats(data);
+        }).fail(function (jqXHR, textStatus) {
+          alert('Failed to get chats');
+        });
+      }
+      
+      function displayChats (receive_chats) {
+        var $message = $('.messages');
+        
+        if (receive_chats.constructor === Array) {
+          for (var i=0;i<receive_chats.length;i++) {
+            $message.append('<span style="display: block; padding: 10px 0;"><i><strong>' + receive_chats[i].name + 
+            ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + 
+            moment(receive_chats[i].createdAt).fromNow() + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 
+            '<p style="display: inline;">' + receive_chats[i].mtext + '</p>' + '</span>');
+          }
+        } else {
+          if (!jQuery.isEmptyObject(receive_chats)) {
+            $message.append('<span style="display: block; padding: 10px 0;"><i><strong>' + receive_chats.name + 
+            ':&nbsp;&nbsp;' + '</i></strong>' + '<i><small><strong>' + 
+            moment(receive_chats.createdAt).fromNow() + '</strong></small></i>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 
+            '<p style="display: inline;">' + receive_chats.mtext + '</p>' + '</span>');
+          }
+        }
+      }
+      
+      loadChats();
+    </script>
+  </body>
+</html>

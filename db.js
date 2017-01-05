@@ -16,6 +16,7 @@ if (env == 'production') {
 var db = {};
 
 db.wblist = sequelize.import(__dirname + '/models/wblist.js');
+db.wblistv = sequelize.import(__dirname + '/models/wblistv.js');
 db.likes = sequelize.import(__dirname + '/models/likes.js');
 db.peopTable = sequelize.import(__dirname + '/models/peopTable.js');
 db.sequelize = sequelize;

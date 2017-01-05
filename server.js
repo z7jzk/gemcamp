@@ -2,6 +2,7 @@ var PORT = process.env.PORT || 3000;
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
+var Cookies = require( "cookies" )
 var io = require('socket.io')(http);
 var moment = require('moment');
 var db = require('./db.js');
@@ -65,6 +66,14 @@ app.get('/chat', function (req, res) {
 app.get('/whiteboard', function (req, res) {
   if (globalName) {
     res.render('whiteboard',{title: "Whiteboard", room:"whiteboard", user_name: globalName});
+  } else {
+    res.render('chat',{title: "Chat Setup", user_name: globalName});
+  }
+});
+
+app.get('/whiteboard_vegas', function (req, res) {
+  if (globalName) {
+    res.render('whiteboard_vegas',{title: "Whiteboard - Vegas", room:"whiteboard_vegas", user_name: globalName});
   } else {
     res.render('chat',{title: "Chat Setup", user_name: globalName});
   }
@@ -145,6 +154,51 @@ app.get('/wball', function (req, res) {
   });
 });
 
+// POST Whiteboard Items
+app.post('/wbitemsv', function (req, res) {
+  console.log('post item started');
+  var body = _.pick(req.body, 'name', 'mtext');
+  
+  // verify data submission integrity
+  if (!_.isString(body.name) || body.name.trim().length === 0 || !_.isString(body.mtext) || body.mtext.trim().length === 0) {
+    return res.status(400).send();
+  }
+  
+  body.mtext = body.mtext.trim();
+  body.name = body.name.trim();
+  
+  // post data to the db
+  db.wblistv.create(body).then(function (wblistv) {
+      res.json(wblistv.toJSON());
+    }, function (e) {
+      res.status(400).json(e);
+  });
+});
+
+// GET WB Vegas
+app.get('/wballv', function (req, res) {
+  var query = req.query;
+  var where = {};
+  
+  // set up where parameters
+  if (query.hasOwnProperty('completed') && query.completed == 'true') {
+    where.completed = true;
+  } else if (query.hasOwnProperty('completed') && query.completed == 'false') {
+    where.completed = false;
+  } else if (query.hasOwnProperty('q') && query.q.trim().length > 0) {
+    where.description = {
+      $like: '%' + query.q + '%'
+    };
+  }
+  
+  // make call to db
+  db.wblistv.findAll({where: where, order: [['createdAt', 'DESC']]}).then(function (wblistv) {
+    res.json(wblistv);
+  }, function (e) {
+    res.status(500).send();
+  });
+});
+
 // POST User Location for Buddy Tracker
 app.post('/updateploc', function (req, res) {
   console.log('location update started');
@@ -189,20 +243,18 @@ app.post('/updateploc', function (req, res) {
 app.get('/getploc', function (req, res) {
   var dateEnd = new Date();
   
-  var dd = dateEnd.getDate()-1;
-  var mm = dateEnd.getMonth(); 
-  var yyyy = dateEnd.getFullYear();
+  var dateMod = dateEnd - 100000000;
   
-  var dateStart = new Date (mm + '/' + dd + '/' + yyyy);
+  var dateStart = new Date (dateMod);
   
   var where = {
-    createdAt: {
+    updatedAt: {
       $between: [dateStart,dateEnd]
     }
   };
   
   // make call to db
-  db.peopTable.findAll({where: where, order: [['createdAt', 'DESC']]}).then(function (peopTable) {
+  db.peopTable.findAll({where: where, order: [['updatedAt', 'DESC']]}).then(function (peopTable) {
     res.json(peopTable);
   }, function (e) {
     res.status(500).send();
